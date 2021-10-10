@@ -218,6 +218,7 @@ if (getCookie("cookie-consent") === null && getIsEuropean()) {
         padding:0;
         padding-bottom: 5px;
         padding-top: 5px;
+        flex: auto;
 
       }
       .GDPR_buttons {
