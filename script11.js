@@ -215,7 +215,10 @@ if (getCookie("cookie-consent") === null && getIsEuropean()) {
     }
     @media screen and (max-width: 460px) {
       .GDPR_text {
+        padding:0;
         padding-bottom: 5px;
+        padding-top: 5px;
+
       }
       .GDPR_buttons {
         padding: 0;
