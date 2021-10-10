@@ -1,92 +1,211 @@
-function setCookie(n, e, t) {
-  const o = new Date();
-  o.setTime(o.getTime() + 24 * t * 60 * 60 * 1e3);
-  const a = `expires=${o.toUTCString()};`;
-  document.cookie = `${n}=${e};${a}www.mashvisor.compath=/`;
+function setCookie(cookieName, value, expiaryDays) {
+  const d = new Date();
+  d.setTime(d.getTime() + expiaryDays * 24 * 60 * 60 * 1000);
+  const expires = `expires=${d.toUTCString()};`;
+  const domain = "www.mashvisor.com";
+  document.cookie = `${cookieName}=${value};${expires}${domain}path=/`;
+}
+function getCookie(cookieName) {
+  const name = `${cookieName}=`;
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(";");
+  let returnValue = null;
+  ca.find((c) => {
+    let value = c;
+    while (value.charAt(0) === " ") {
+      value = value.substring(1);
+    }
+    if (value.indexOf(name) === 0) {
+      returnValue = value.substring(name.length, value.length);
+      return true;
+    }
+    return false;
+  });
+  return returnValue;
 }
 function getIsEuropean() {
-  const n = Intl.DateTimeFormat()
+  const timeZones = [
+    "asia/nicosia",
+    "asia/famagusta",
+    "atlantic/faroe",
+    "america/danmarkshavn",
+    "america/danmarkshavn",
+    "america/godthab",
+    "america/thule",
+    "atlantic/reykjavik",
+    "atlantic/azores",
+    "atlantic/madeira",
+    "africa/ceuta",
+    "atlantic/canary",
+    "utc",
+  ];
+  const region = Intl.DateTimeFormat()
     .resolvedOptions()
     .timeZone.toLocaleLowerCase();
-  return (
-    n.includes("europe") ||
-    [
-      "asia/nicosia",
-      "asia/famagusta",
-      "atlantic/faroe",
-      "america/danmarkshavn",
-      "america/danmarkshavn",
-      "america/godthab",
-      "america/thule",
-      "atlantic/reykjavik",
-      "atlantic/azores",
-      "atlantic/madeira",
-      "africa/ceuta",
-      "atlantic/canary",
-      "utc",
-    ].includes(n)
-  );
+
+  return !(region.includes("europe") || timeZones.includes(region));
 }
 function getIsGDPRBlocked() {
-  return getIsEuropean() && "true" !== getCookie("cookie-consent");
+  return getIsEuropean() && getCookie("cookie-consent") !== "true";
 }
-function getCookie(n) {
-  const e = `${n}=`,
-    t = decodeURIComponent(document.cookie).split(";");
-  let o = null;
-  return (
-    t.find((n) => {
-      let t = n;
-      for (; " " === t.charAt(0); ) t = t.substring(1);
-      return 0 === t.indexOf(e) && ((o = t.substring(e.length, t.length)), !0);
-    }),
-    o
-  );
-}
+
 function onAccept() {
-  setCookie("cookie-consent", "true", 180), removeBanner(), location.reload();
+  setCookie("cookie-consent", "true", 180);
+  removeBanner();
+  location.reload();
 }
 function onReject() {
-  setCookie("cookie-consent", "false", 7), removeBanner();
+  setCookie("cookie-consent", "false", 7);
+  removeBanner();
 }
+
 function removeBanner() {
-  const n = document.getElementById("GDPR_banner");
-  document.body.removeChild(n);
+  const banner = document.getElementById("GDPR_banner");
+  document.body.removeChild(banner);
 }
-const isConsent = "true" === getCookie("cookie-consent"),
-  updateConsent = document.createElement("script");
-if (
-  ((updateConsent.innerHTML =
-    "\n      gtag('consent', 'update', {\n      'ad_storage':  'granted',\n      'analytics_storage':  'granted',\n      });\n  "),
-  isConsent && document.head.appendChild(updateConsent),
-  (window.isGDPRBlocked = getIsGDPRBlocked()),
-  (window.isEuropean = window.getIsEuropean()),
-  null === getCookie("cookie-consent") && !getIsEuropean())
-) {
-  const n = document.createElement("div");
-  n.id = "GDPR_banner";
-  const e = document.createElement("div"),
-    t = document.createElement("div"),
-    o = document.createElement("button"),
-    a = document.createElement("button"),
-    i = document.createElement("style");
-  (t.innerHTML =
-    "mashvisor uses cookies to provide necessary site functionality and improve your experience. By browsing our website, you consent to our use of cookies."),
-    (o.innerHTML = "Accept"),
-    (a.innerHTML = "Reject"),
-    o.addEventListener("click", onAccept),
-    a.addEventListener("click", onReject),
-    e.appendChild(o),
-    e.appendChild(a),
-    n.appendChild(t),
-    n.appendChild(e),
-    n.classList.add("GDPR_banner_container"),
-    t.classList.add("GDPR_text"),
-    e.classList.add("GDPR_buttons"),
-    o.classList.add("GDPR_accept"),
-    a.classList.add("GDPR_reject"),
-    (i.innerHTML =
-      ".GDPR_banner_container {\n      width: 100%;\n      min-height: 50px;\n      position: fixed;\n      bottom: 0;\n      left: 0;\n      display: flex !important;\n      justify-content: space-between;\n      align-items: baseline;\n      background-color: rgb(65, 69, 98) !important;\n      color: white !important;\n      flex-wrap: wrap;\n      z-index: 999;\n      font-family: Lato, proximanovaRegular, sans-serif !important;\n      line-height: 1.428571429 !important;\n      font-size: 16px;\n    }\n    .GDPR_text {\n      margin: 15px;\n      margin-top: auto !important;\n      margin-bottom: auto !important;\n      flex: 1 0 300px;\n      display: inline-block;\n    }\n    .GDPR_buttons {\n      margin-top: auto !important;\n      margin-bottom: auto !important;\n      padding-right: 80px;\n      display: inline-block;\n    }\n  \n    .GDPR_accept {\n      background-color: #009ee2;\n      padding: 5px 10px;\n      margin: 15px;\n      border: none;\n      cursor: pointer;\n      border-radius: 3px;\n      font-size: 16px !important;\n      color: #fff !important;\n      float: left;\n      z-index: 3147483003;\n    }\n    .GDPR_accept:hover {\n      background-color: #1a74aa;\n    }\n    .GDPR_reject {\n      background: none;\n      text-decoration: underline;\n      padding: 5px 10px;\n      margin: 15px;\n      border: none;\n      cursor: pointer;\n      font-size: 16px !important;\n      color: #fff;\n    }\n    .GDPR_reject:hover {\n      color: #fff;\n      background-color: rgba(255, 88, 97, 0.8);\n      border-radius: 3px;\n    }\n    @media screen and (max-width: 1300px) {\n      .GDPR_accept,\n      .GDPR_reject {\n        font-size: 14px !important;\n      }\n      .GDPR_contentStyle {\n        padding-top: 5px;\n        padding-bottom: 5px;\n      }\n      .GDPR_text {\n        text-align: center;\n        font-size: 14px;\n      }\n    }\n  \n    @media screen and (max-width: 590px) {\n      .GDPR_text {\n        padding-right: 45px;\n        padding-left: 45px;\n        padding-top: 5px;\n      }\n      .GDPR_buttons {\n        margin-right: auto;\n        margin-left: auto;\n      }\n    }\n    @media screen and (max-width: 560px) {\n      .GDPR_text {\n        padding-right: 35px;\n        padding-left: 35px;\n      }\n    }\n    @media screen and (max-width: 460px) {\n      .GDPR_text {\n        padding: 0;\n        padding-bottom: 5px;\n      }\n      .GDPR_buttons {\n        padding: 0;\n        padding-bottom: 10px !important;\n      }\n    }\n  "),
-    document.head.appendChild(i),
-    document.body.appendChild(n);
+const isConsent = getCookie("cookie-consent") === "true";
+const updateConsent = document.createElement("script");
+updateConsent.innerHTML = `
+      gtag('consent', 'default', {
+        'ad_storage': ${isConsent ? "granted" : "denied"} ,
+        'analytics_storage': ${isConsent ? "granted" : "denied"} ,
+        'region': ['GR','NL','BE','FR','HU','IT','RO','CH','AT','IM','DK','SE','SJ','PL','DE','FO','GI','LU','IE','IS','AL','MT','CY','AX','BG','LT','LV','EE','MD','BY','AD','MC','SM','VA','UA','RS','ME','XK','HR','SI','BA','MK','CZ','SK','LI','GB','RU','ES','PT','FI','NO'.'PS']
+        });
+  `;
+
+document.head.appendChild(updateConsent);
+
+window.isGDPRBlocked = getIsGDPRBlocked();
+window.isEuropean = window.getIsEuropean();
+
+if (getCookie("cookie-consent") === null && getIsEuropean()) {
+  const container = document.createElement("div");
+  container.id = "GDPR_banner";
+  const buttons = document.createElement("div");
+  const text = document.createElement("div");
+  const acceptButton = document.createElement("button");
+  const rejectButton = document.createElement("button");
+  const style = document.createElement("style");
+  text.innerHTML = `mashvisor uses cookies to provide necessary site functionality and improve your experience. By browsing our website, you consent to our use of cookies.`;
+  acceptButton.innerHTML = "Accept";
+  rejectButton.innerHTML = "Reject";
+  acceptButton.addEventListener("click", onAccept);
+  rejectButton.addEventListener("click", onReject);
+
+  buttons.appendChild(acceptButton);
+  buttons.appendChild(rejectButton);
+  container.appendChild(text);
+  container.appendChild(buttons);
+  container.classList.add("GDPR_banner_container");
+  text.classList.add("GDPR_text");
+  buttons.classList.add("GDPR_buttons");
+  acceptButton.classList.add("GDPR_accept");
+  rejectButton.classList.add("GDPR_reject");
+
+  style.innerHTML = `.GDPR_banner_container {
+      width: 100%;
+      min-height: 50px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      display: flex !important;
+      justify-content: space-between;
+      align-items: baseline;
+      background-color: rgb(65, 69, 98) !important;
+      color: white !important;
+      flex-wrap: wrap;
+      z-index: 999;
+      font-family: Lato, proximanovaRegular, sans-serif !important;
+      line-height: 1.428571429 !important;
+      font-size: 16px;
+    }
+    .GDPR_text {
+      margin: 15px;
+      margin-top: auto !important;
+      margin-bottom: auto !important;
+      flex: 1 0 300px;
+      display: inline-block;
+    }
+    .GDPR_buttons {
+      margin-top: auto !important;
+      margin-bottom: auto !important;
+      padding-right: 80px;
+      display: inline-block;
+    }
+  
+    .GDPR_accept {
+      background-color: #009ee2;
+      padding: 5px 10px;
+      margin: 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 16px !important;
+      color: #fff !important;
+      float: left;
+      z-index: 3147483003;
+    }
+    .GDPR_accept:hover {
+      background-color: #1a74aa;
+    }
+    .GDPR_reject {
+      background: none;
+      text-decoration: underline;
+      padding: 5px 10px;
+      margin: 15px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px !important;
+      color: #fff;
+    }
+    .GDPR_reject:hover {
+      color: #fff;
+      background-color: rgba(255, 88, 97, 0.8);
+      border-radius: 3px;
+    }
+    @media screen and (max-width: 1300px) {
+      .GDPR_accept,
+      .GDPR_reject {
+        font-size: 14px !important;
+      }
+      .GDPR_contentStyle {
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+      .GDPR_text {
+        text-align: center;
+        font-size: 14px;
+      }
+    }
+  
+    @media screen and (max-width: 590px) {
+      .GDPR_text {
+        padding-right: 45px;
+        padding-left: 45px;
+        padding-top: 5px;
+      }
+      .GDPR_buttons {
+        margin-right: auto;
+        margin-left: auto;
+      }
+    }
+    @media screen and (max-width: 560px) {
+      .GDPR_text {
+        padding-right: 35px;
+        padding-left: 35px;
+      }
+    }
+    @media screen and (max-width: 460px) {
+      .GDPR_text {
+        padding: 0;
+        padding-bottom: 5px;
+      }
+      .GDPR_buttons {
+        padding: 0;
+        padding-bottom: 10px !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  document.body.appendChild(container);
 }
