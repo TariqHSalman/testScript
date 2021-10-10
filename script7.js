@@ -187,6 +187,9 @@ if (getCookie("cookie-consent") === null && getIsEuropean()) {
       .GDPR_text {
         text-align: center;
         font-size: 14px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
       }
     }
   
@@ -203,18 +206,20 @@ if (getCookie("cookie-consent") === null && getIsEuropean()) {
     }
     @media screen and (max-width: 560px) {
       .GDPR_text {
-        padding-right: 35px;
-        padding-left: 35px;
+        padding-right: 50px;
+        padding-left: 50px;
+      }
+      .GDPR_text {
+        padding: 0;
       }
     }
     @media screen and (max-width: 460px) {
       .GDPR_text {
-        padding: 0;
         padding-bottom: 5px;
       }
       .GDPR_buttons {
         padding: 0;
-        padding-bottom: 10px !important;
+        padding-bottom: 15px !important;
       }
     }
   `;
