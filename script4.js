@@ -64,16 +64,24 @@ function removeBanner() {
   document.body.removeChild(banner);
 }
 const isConsent = getCookie("cookie-consent") === "true";
-const isGranted = isConsent ? "granted" : "denied";
 const updateConsent = document.createElement("script");
-updateConsent.innerHTML = `
+if (isConsent) {
+  updateConsent.innerHTML = `
       gtag('consent', 'default', {
-        'ad_storage': ${isGranted} ,
-        'analytics_storage': ${isGranted} ,
+        'ad_storage': "granted" ,
+        'analytics_storage': "granted" ,
         'region': ['GR','NL','BE','FR','HU','IT','RO','CH','AT','IM','DK','SE','SJ','PL','DE','FO','GI','LU','IE','IS','AL','MT','CY','AX','BG','LT','LV','EE','MD','BY','AD','MC','SM','VA','UA','RS','ME','XK','HR','SI','BA','MK','CZ','SK','LI','GB','RU','ES','PT','FI','NO','PS']
         });
   `;
-
+} else {
+  updateConsent.innerHTML = `
+  gtag('consent', 'default', {
+    'ad_storage': "denied" ,
+    'analytics_storage': "denied" ,
+    'region': ['GR','NL','BE','FR','HU','IT','RO','CH','AT','IM','DK','SE','SJ','PL','DE','FO','GI','LU','IE','IS','AL','MT','CY','AX','BG','LT','LV','EE','MD','BY','AD','MC','SM','VA','UA','RS','ME','XK','HR','SI','BA','MK','CZ','SK','LI','GB','RU','ES','PT','FI','NO','PS']
+    });
+`;
+}
 document.head.appendChild(updateConsent);
 
 window.isGDPRBlocked = getIsGDPRBlocked();
