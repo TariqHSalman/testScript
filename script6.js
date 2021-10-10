@@ -129,7 +129,7 @@ if (getCookie("cookie-consent") === null && getIsEuropean()) {
       font-size: 16px;
     }
     .GDPR_link{
-      color: #3ea1e0;
+      color: #009ee2;
     }
     .GDPR_text {
       margin: 15px;
