@@ -202,15 +202,13 @@ if (getCookie("cookie-consent") === null && getIsEuropean()) {
       .GDPR_buttons {
         margin-right: auto;
         margin-left: auto;
+        padding: 0;
       }
     }
     @media screen and (max-width: 560px) {
       .GDPR_text {
         padding-right: 50px;
         padding-left: 50px;
-      }
-      .GDPR_text {
-        padding: 0;
       }
     }
     @media screen and (max-width: 460px) {
