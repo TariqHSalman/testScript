@@ -69,7 +69,7 @@ updateConsent.innerHTML = `
       gtag('consent', 'default', {
         'ad_storage': ${isConsent ? "granted" : "denied"} ,
         'analytics_storage': ${isConsent ? "granted" : "denied"} ,
-        'region': ['GR','NL','BE','FR','HU','IT','RO','CH','AT','IM','DK','SE','SJ','PL','DE','FO','GI','LU','IE','IS','AL','MT','CY','AX','BG','LT','LV','EE','MD','BY','AD','MC','SM','VA','UA','RS','ME','XK','HR','SI','BA','MK','CZ','SK','LI','GB','RU','ES','PT','FI','NO'.'PS']
+        'region': ['GR','NL','BE','FR','HU','IT','RO','CH','AT','IM','DK','SE','SJ','PL','DE','FO','GI','LU','IE','IS','AL','MT','CY','AX','BG','LT','LV','EE','MD','BY','AD','MC','SM','VA','UA','RS','ME','XK','HR','SI','BA','MK','CZ','SK','LI','GB','RU','ES','PT','FI','NO','PS']
         });
   `;
 
