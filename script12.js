@@ -95,7 +95,7 @@ if (getCookie("cookie-consent") === null && getIsEuropean()) {
   const acceptButton = document.createElement("button");
   const rejectButton = document.createElement("button");
   const style = document.createElement("style");
-  text.innerHTML = `mashvisor uses cookies to provide necessary site functionality and improve your experience. By browsing our website, you consent to our use of cookies. to learn more please refer to our <a class='GDPR_link' href='/cookie-policy'>cookie policy</a> `;
+  text.innerHTML = `Mashvisor uses cookies to provide necessary site functionality and improve your experience. By browsing our website, you consent to our use of cookies. To learn more please refer to our <a class='GDPR_link' href='/cookie-policy'>cookie policy</a> `;
   acceptButton.innerHTML = "Accept";
   rejectButton.innerHTML = "Reject";
   acceptButton.addEventListener("click", onAccept);
