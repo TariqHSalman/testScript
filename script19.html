@@ -7,6 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Document</title>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyDt9U0GJGEi9MI5bpcRuWJIeN04J58CHsM"></script>
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
 <style type="text/css">
     
     .sticky-fix.blog-page .header-blog{
@@ -342,15 +344,7 @@
     return location;
   }
   window.addEventListener('load', function () {
-    const mapScript = document.createElement('script')
-    const fontLink=document.createElement('link')
-    mapScript.setAttribute("src", "https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyDt9U0GJGEi9MI5bpcRuWJIeN04J58CHsM");
-    mapScript.setAttribute("type", "text/javascript");
-    fontLink.href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap"
-    fontLink.rel="stylesheet"
-    document.head.appendChild(mapScript)
-    document.head.appendChild(fontLink)
-    mapScript.addEventListener('load', function () {
+
     var autocomplete = new google.maps.places.Autocomplete(input, options);
     document.getElementById('sticky_analyze').addEventListener('click', inputClickFunction);
     autocomplete.addListener('place_changed', inputClickFunction.bind(this));
@@ -422,7 +416,7 @@
           search_bar.click();
       }, 1000);
     }
-  };});
+  };
   });
   </script>
 </body>
