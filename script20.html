@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -343,7 +342,6 @@
     return location;
   }
   window.addEventListener('load', function () {
-
     const mapScript = document.createElement('script')
     const fontLink=document.createElement('link')
     mapScript.setAttribute("src", "https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyDt9U0GJGEi9MI5bpcRuWJIeN04J58CHsM");
@@ -352,9 +350,8 @@
     fontLink.rel="stylesheet"
     document.head.appendChild(mapScript)
     document.head.appendChild(fontLink)
-    mapScript.addEventListener
     mapScript.addEventListener('load', function () {
-      var autocomplete = new google.maps.places.Autocomplete(input, options);
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
     document.getElementById('sticky_analyze').addEventListener('click', inputClickFunction);
     autocomplete.addListener('place_changed', inputClickFunction.bind(this));
     input.addEventListener('input', function(){
@@ -407,9 +404,9 @@
       document.cookie = 'lng' + '=' + longitude + ';path=/' ;
         // add this part to enabel locations support  ~ neighborhood='+neighborhood+'&zipCode='+zipcode+'&
         var nextLocation = '';
-        nextLocation = 'https://www.mashvisor.com/explore/search?city=' + city + '&state=' + state + '&country=' + country + '&lat=' + latitude + '&lng=' + longitude ;
+        nextLocation = 'https://www.mashvisor.com/explore/#!/Search?city=' + city + '&state=' + state + '&country=' + country + '&lat=' + latitude + '&lng=' + longitude ;
         if(_location.hasAddress){
-          nextLocation +=  '&zipCode=' + zipcode + '&streetNumber=' + streetNumber + '&routeLong=' + routeLong + '&routeShort=' + routeShort + '&neighborhood=' + neighborhood + '&hasAddress=' + 'true';
+          nextLocation +=  '&zipCode=' + zipcode + '&streetNumber=' + streetNumber + '&routeLong=' + routeLong + '&routeShort=' + routeShort + '&hasAddress=' + 'true';
         }
         setTimeout(function(){
           // window.parent.location.href = nextLocation;
@@ -419,14 +416,13 @@
         }, 1000);
     } else {
       setTimeout(function(){
-        // window.parent.location.href = 'https://www.mashvisor.com/explore/';
+        // window.parent.location.href = 'https://www.mashvisor.com/explore/#!/';
         var search_bar = document.getElementById('start_analyze_anchor');
-          search_bar.href = 'https://www.mashvisor.com/explore/';
+          search_bar.href = 'https://www.mashvisor.com/explore/#!/';
           search_bar.click();
       }, 1000);
     }
-  };
-    });
+  };});
   });
   </script>
 </body>
