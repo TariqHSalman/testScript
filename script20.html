@@ -352,7 +352,8 @@
     fontLink.rel="stylesheet"
     document.head.appendChild(mapScript)
     document.head.appendChild(fontLink)
-    mapScript.onload= function(){
+    mapScript.addEventListener
+    mapScript.onload('load', function () {
       var autocomplete = new google.maps.places.Autocomplete(input, options);
     document.getElementById('sticky_analyze').addEventListener('click', inputClickFunction);
     autocomplete.addListener('place_changed', inputClickFunction.bind(this));
@@ -425,9 +426,7 @@
       }, 1000);
     }
   };
-    }
-
-  
+    });
   });
   </script>
 </body>
