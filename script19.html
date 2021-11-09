@@ -342,6 +342,15 @@
     return location;
   }
   window.addEventListener('load', function () {
+
+    function cleanEventListenerAmp () {
+      window.removeEventListener('mousemove', onInteractionCallback);
+      window.removeEventListener('scroll', onInteractionCallback);
+      window.removeEventListener('touchstart', onInteractionCallback);
+    };
+
+    function  onInteractionCallback (){
+      cleanEventListenerAmp();
     const mapScript = document.createElement('script')
     const fontLink=document.createElement('link')
     mapScript.setAttribute("src", "https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyDt9U0GJGEi9MI5bpcRuWJIeN04J58CHsM");
@@ -423,6 +432,11 @@
       }, 1000);
     }
   };});
+}
+    
+    window.addEventListener('touchstart', onInteractionCallback);
+    window.addEventListener('mousemove', onInteractionCallback);
+    window.addEventListener('scroll', onInteractionCallback, { passive: true });
   });
   </script>
 </body>
