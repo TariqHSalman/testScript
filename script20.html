@@ -346,8 +346,8 @@
 
     const mapScript = document.createElement('script')
     const fontLink=document.createElement('link')
-    mapScript.src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyDt9U0GJGEi9MI5bpcRuWJIeN04J58CHsM";
-    mapScript.type="text/javascript"
+    mapScript.setAttribute("src", "https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyDt9U0GJGEi9MI5bpcRuWJIeN04J58CHsM");
+    mapScript.setAttribute("type", "text/javascript");
     fontLink.href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap"
     fontLink.rel="stylesheet"
     document.head.appendChild(mapScript)
